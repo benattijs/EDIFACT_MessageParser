@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EDIFACTMessageParser
 {
-    public class Segments
+    public class SegmentTags
     {
         public const string UNA = "UNA", 
                             UNB = "UNB",

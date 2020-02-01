@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EDIFACTMessageParser.Entities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace EDIFACTMessageParser
                         string segmentTag = segment.Substring(0, segment.IndexOf(ElementDelimiter));
                         switch (segmentTag)
                         {
-                            case Segments.LOC:
+                            case SegmentTags.LOC:
                                 var response = ParseLOCSegment(segment);
                                 allSegments.Add(response);
                                 break;
@@ -58,10 +59,10 @@ namespace EDIFACTMessageParser
             return allSegments;
         }
 
-        private static Segment ParseLOCSegment(string segment)
+        private static LOCSegment ParseLOCSegment(string segment)
         {
             //Logics specific for parcing LOC Segments
-            Segment response = new Segment(segment.Split(ElementDelimiter));
+            LOCSegment response = new LOCSegment(segment.Split(ElementDelimiter));
             
             return response;
         }

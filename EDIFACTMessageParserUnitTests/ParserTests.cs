@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EDIFACTMessageParser;
 using System.Collections.Generic;
+using EDIFACTMessageParser.Entities;
 
 namespace EDIFACTMessageParserUnitTests
 {
@@ -16,7 +17,7 @@ namespace EDIFACTMessageParserUnitTests
         {
             string[] element = new string[] { "LOC", "08", "AAABBBCCC"};
 
-            Segment seg = new Segment(element);
+            LOCSegment seg = new LOCSegment(element);
 
             AssertIndividualElements(element, seg);
 
@@ -29,9 +30,22 @@ namespace EDIFACTMessageParserUnitTests
         {
             string[] element = new string[] { "LOC", "45", "ABCDE", "865454", "SOL'"};
 
-            Segment seg = new Segment(element);
+            LOCSegment seg = new LOCSegment(element);
 
             AssertIndividualElements(element, seg);
+
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Incorrect Segment Tag for LOCSegment object")]
+        public void TestSegmentConstructorWithWrongTag()
+        {
+            string[] element = new string[] { "BBB", "08", "AAABBBCCC" };
+
+            LOCSegment seg = new LOCSegment(element);
+
+
 
         }
 
@@ -151,6 +165,13 @@ namespace EDIFACTMessageParserUnitTests
             for (int i = 1; i < element.Length; i++)
             {
                 Assert.AreEqual(element[i], seg.Elements[i - 1]);
+            }
+
+            switch (seg.Tag)
+            {
+                case SegmentTags.LOC:
+                    Assert.IsTrue(seg is LOCSegment); //Check if it is receiving a LOCSegment type element back
+                    break;
             }
         }
         #endregion
