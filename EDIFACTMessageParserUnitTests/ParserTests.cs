@@ -51,6 +51,17 @@ namespace EDIFACTMessageParserUnitTests
 
         #region ParserTests
         [TestMethod]
+        public void TestWithEmptyMessage()
+        {
+            string message = "";
+            List<Segment> response = Parser.ParseAllElements(message);
+
+            //Should return a empty response
+            Assert.AreEqual(0, response.Count);
+
+        }
+
+        [TestMethod]
         public void TestMessageWithSingleLine()
         {
             string message = "LOC+25+ABC34'";
